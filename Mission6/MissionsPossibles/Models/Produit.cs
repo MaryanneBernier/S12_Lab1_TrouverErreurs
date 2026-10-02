@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission.Models
@@ -15,12 +14,12 @@ namespace Mission.Models
         public DateTime DateCreation { get; set; } = DateTime.Now;
         [Range(0, 1000, ErrorMessage = "Le {0} doit être entre {1} et {2}")]
         [DataType(DataType.Currency)]
-        public decimal PrixVente { get; set; }
+        public decimal? PrixVente { get; set; }
         [ForeignKey("Categorie")]
         public int CategorieId { get; set; }
-      
-     
-        public Categorie Categorie { get; set; }
+
+
+        public Categorie? Categorie { get; set; }
 
 
     }

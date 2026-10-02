@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mission.Data;
-using Mission.ViewModels;
 using Mission.Models;
+using Mission.ViewModels;
 
 namespace Mission.Controllers
 {
@@ -50,6 +46,9 @@ namespace Mission.Controllers
         public IActionResult Create()
         {
             Produit_VM produit_VM = new Produit_VM();
+
+            produit_VM.Produit = new Produit();
+
             produit_VM.CategorieList = _context.Categories.OrderBy(c => c.Titre).Select(i => new SelectListItem
             {
                 Text = i.Titre,
@@ -71,7 +70,15 @@ namespace Mission.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-         
+
+            produit_VM.CategorieList = _context.Categories
+        .OrderBy(c => c.Titre)
+        .Select(i => new SelectListItem
+        {
+            Text = i.Titre,
+            Value = i.Id.ToString()
+        });
+
             return View(produit_VM);
         }
 
@@ -93,7 +100,7 @@ namespace Mission.Controllers
             {
                 return NotFound();
             }
-           
+
             return View(produit_VM);
         }
 
@@ -124,7 +131,7 @@ namespace Mission.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(produit_VM);
         }
 
