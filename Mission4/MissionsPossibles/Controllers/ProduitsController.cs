@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mission.Data;
-using Mission.ViewModels;
 using Mission.Models;
+using Mission.ViewModels;
 
 namespace Mission.Controllers
 {
@@ -49,7 +45,12 @@ namespace Mission.Controllers
         // GET: Produits/Create
         public IActionResult Create()
         {
-         
+            ViewData["CategorieId"] = new SelectList(
+             _context.Categories,
+            "Id",
+            "Titre");
+
+
             return View();
         }
 
@@ -66,7 +67,7 @@ namespace Mission.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View(produit);
         }
 
@@ -88,7 +89,7 @@ namespace Mission.Controllers
             {
                 return NotFound();
             }
-           
+
             return View(produit_VM);
         }
 
@@ -119,7 +120,7 @@ namespace Mission.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(produit_VM);
         }
 
